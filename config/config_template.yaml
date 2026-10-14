@@ -1,0 +1,56 @@
+# Template: copy to config/config_<experiment>.yaml and edit.
+# Use with:  snakemake --profile profiles/default --configfile config/config_<experiment>.yaml
+# Lines marked (optional) show the default value.
+
+# --- Which stages to run (optional) ---------------------------------------------
+# stages: [alignment, analysis]       # or only one of them; override: --config stages=alignment
+
+# --- Samples (required) -----------------------------------------------------------
+sample_groups:
+  group_a: [sampleA1, sampleA2, sampleA3]
+  group_b: [sampleB1, sampleB2, sampleB3]
+groups: [group_a]                     # (optional) groups to run, default: all
+                                      # override: --config groups=group_a,group_b
+
+# =============================== STAGE 1: alignment ===============================
+genome_dir: /path/to/bismark_genome_folder/       # contains Bisulfite_Genome/ (bismark_genome_preparation)
+raw_dir: /path/to/raw_fastq
+# file names inside raw_dir; {sample} is filled in by Snakemake
+raw_r1_name: "{sample}_R1.fastq.gz"
+raw_r2_name: "{sample}_R2.fastq.gz"
+
+trimming:                             # (optional)
+  clip_5p: {R1: 10, R2: 10}           # --clip_R1 / --clip_R2
+  clip_3p: {R1: 10, R2: 10}           # --three_prime_clip_R1 / _R2
+bismark:                              # (optional)
+  score_min: "L,0,-0.6"
+  extractor_extra: "--scaffolds"      # extra flags for bismark_methylation_extractor
+  extractor_buffer: "10G"
+
+keep_trimmed_fastq: false             # (optional) false: delete trimmed fastq after mapping
+run_multiqc: true                     # (optional)
+
+# Output folders (optional)
+# trim_dir: results/trimmed
+# bismark_dir: results/bismark        # read by BOTH stages
+# qc_dir: results/qc
+# log_dir: results/logs
+
+# Cores per job (optional; defaults shown)
+# trim_threads: 4
+# map_threads: 8                      # Bismark runs map_threads // 4 parallel instances
+# dedup_threads: 1
+# extract_threads: 2
+
+# ============================== STAGE 2: analysis ================================
+exp_name: MyExperiment                # prefix for the result files
+analysis_dir: /path/to/analysis/results
+genome_fasta: /path/to/genome.fna     # normal genome, WITHOUT spike-ins
+annotation:
+  genes_gff: /path/to/genes.sort.gff
+  exons_gff: /path/to/exons.sort.gff
+# scripts_dir: workflow/scripts       # (optional) default: workflow/scripts
+spike_contigs: [Lambda_NEB, pUC19]    # (optional) contigs split off into the spike-in table
+coverage_cutoff: 5                    # (optional) keeps CpGs with coverage > cutoff
+flank_size: 1000                      # (optional) up-/downstream region size (bp)
+# sort_threads: 4

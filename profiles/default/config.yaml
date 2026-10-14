@@ -1,0 +1,11 @@
+# Generic settings for Snakemake >= 8. Copy and adapt for your machine (see profiles/server).
+# snakemake --profile profiles/default --configfile config/<your_config>.yaml
+software-deployment-method: conda
+# conda-prefix: /path/to/shared/conda_envs   # optional: reuse built envs across projects
+conda-frontend: conda
+cores: 8
+resources:
+  mapping_slots: 1            # max. number of bismark_mapping jobs at the same time
+printshellcmds: true
+rerun-incomplete: true
+keep-going: true

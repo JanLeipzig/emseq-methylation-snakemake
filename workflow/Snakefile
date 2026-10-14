@@ -1,0 +1,21 @@
+# =============================================================================
+# EM-seq methylation workflow
+#   stage 1 "alignment": trimming -> Bismark mapping -> deduplication -> methylation calls
+#   stage 2 "analysis":  CpG tables -> overlap with genes/exons/introns/flanks -> report
+#
+# Run from the repository root:
+#   snakemake --profile profiles/default --configfile config/config_template.yaml -n
+#   snakemake ... --config stages=alignment      # run only one stage
+# =============================================================================
+include: "rules/common.smk"
+
+if "alignment" in STAGES:
+    include: "rules/01_alignment_and_calling.smk"
+
+if "analysis" in STAGES:
+    include: "rules/02_methylation_analysis.smk"
+
+
+rule all:
+    input:
+        TARGETS,
