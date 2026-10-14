@@ -3,8 +3,6 @@
 Snakemake workflow for EM-seq data: Bismark alignment and methylation calling, followed by
 an analysis of CpG methylation in genes, exons/introns, intergenic and flanking regions.
 
-> Working title - rename the repository as you like.
-
 ## Stages
 
 | Stage | File | What it does |
@@ -67,5 +65,14 @@ profiles/                   # machine settings
 ```
 
 ## Citation / License
+Copyright © 2026 Jan Engelhardt
 
-Add a `LICENSE` file and, if you publish, a `CITATION.cff` before making the repository public.
+This program is free software: you can redistribute it and/or modify it under the terms of the
+GNU General Public License as published by the Free Software Foundation, either version 3 of
+the License, or (at your option) any later version. 
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY;
+without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR
+PURPOSE. See the GNU General Public License for more details. 
+
+
+Please cite: Länger et al. 2025, J Exp Zool B 344(7): 454–469
